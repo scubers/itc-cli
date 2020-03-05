@@ -17,3 +17,11 @@ cp .build/release/${name} $name
 tar zcvf $name-${version}.tar.gz $name
 
 rm $name
+
+if [ -d release ];then
+    echo 'exists'
+else
+    mkdir release
+fi
+
+mv $name-$version.tar.gz release/$name-$version.tar.gz
