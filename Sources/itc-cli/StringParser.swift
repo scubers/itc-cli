@@ -82,8 +82,24 @@ struct StringsParser {
 }
 
 extension StringsParser: CommandHandler {
+    static func getHelpString() -> String {
+        """
+        itc-cli i18n
+        --namespace=xxx
+        --dir=检测目录
+        --module=业务标识
+        --target=zh-hans // 最终寻找dir下 xxx/yyy/zh-hans.lproj/Localizable.strings 文件进行转化
+        --output=生成文件目录
+        """
+    }
     static func handleCommand(_ args: ArgParser) {
-        guard args.subCommand == "strs" else { return }
+        guard args.subCommand == "i18n" else { return }
+        
+        if args.isHelp() {
+            print(getHelpString())
+            return
+        }
+        
         guard let namespace = args.get("namespace") else {
             print("参数 --namespace 为空")
             return

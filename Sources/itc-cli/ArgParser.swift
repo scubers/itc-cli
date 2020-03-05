@@ -27,6 +27,10 @@ class ArgParser {
             .map { $0.replacingOccurrences(of: prefix, with: "") }
             .first
     }
+
+    func isHelp() -> Bool {
+        return !options.filter { $0.contains("--help") }.isEmpty
+    }
 }
 
 protocol CommandHandler {
