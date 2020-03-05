@@ -25,3 +25,7 @@ else
 fi
 
 mv $name-$version.tar.gz release/$name-$version.tar.gz
+
+git add .
+git commit -m "new version: ${version}"
+git push
