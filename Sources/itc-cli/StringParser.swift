@@ -43,7 +43,12 @@ struct StringsParser {
 //            return Properties(indent: 0, modifiers: [.static, .let], name: r.key, type: "String?", value: r.value)
             return Function(indent: 0, modifiers: [.static, .func], statements: self.getStatements(key: r.key, ps: placeholders), signature: self.generateSignature(key: r.declareKey, ps: placeholders))
         }
-        let p = Properties(indent: 0, modifiers: [.private, .static, .let], name: "bundle", type: "Bundle", value: "Bundle(path: Bundle.main.path(forResource: \"i18n_\(module)\", ofType: \"bundle\")! + \"/\\(I18nConfig.shared.config).lproj\")!")
+        
+        let p = Properties(indent: 0,
+                           modifiers: [.private, .static, .let],
+                           name: "bundle",
+                           type: "Bundle",
+                           value: "Bundle(path: Bundle.main.path(forResource: \"i18n_\(module)\", ofType: \"bundle\")! + \"/\\(UserDefaults.standard.string(forKey: \"i18nConfigKey\") ?? \"en\").lproj\")!")
         return Namespace(indent: 0, modifiers: [self.modifier, .extension], declare: namespace, properties: [p], funcs: ps).description
     }
 
