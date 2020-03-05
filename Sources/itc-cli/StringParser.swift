@@ -49,7 +49,7 @@ struct StringsParser {
                            name: "bundle",
                            type: "Bundle",
                            value: "Bundle(path: Bundle.main.path(forResource: \"i18n_\(module)\", ofType: \"bundle\")! + \"/\\(UserDefaults.standard.string(forKey: \"i18nConfigKey\") ?? \"en\").lproj\")!")
-        return Namespace(indent: 0, modifiers: [self.modifier, .extension], declare: namespace, properties: [p], funcs: ps).description
+        return Namespace(indent: 0, modifiers: [self.modifier, .struct], declare: namespace, properties: [p], funcs: ps).description
     }
 
     func getPlaceholder(_ content: String) -> [String] {
@@ -131,7 +131,6 @@ extension StringsParser: CommandHandler {
             let content = try! String(contentsOfFile: "\(dir)/\(file)")
             let code = StringsParser(namespace: namespace, modifier: .public).parserToSwift(content, module: module)
             let outputFile = "\(output)/\(name).swift"
-//            print(outputFile)
             try? code.write(toFile: outputFile, atomically: true, encoding: .utf8)
         }
     }
